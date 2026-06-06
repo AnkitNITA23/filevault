@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const api = {
   setToken(token) {
@@ -136,6 +136,13 @@ const api = {
       method: 'POST',
       body: JSON.stringify({ password })
     });
+  },
+
+  async getHealth() {
+    const rootUrl = API_BASE.replace('/api', '');
+    const res = await fetch(`${rootUrl}/health`);
+    if (!res.ok) throw new Error('Health check failed');
+    return res.json();
   }
 };
 

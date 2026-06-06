@@ -58,11 +58,8 @@ export default function App() {
   useEffect(() => {
     const fetchHealth = async () => {
       try {
-        const response = await fetch('http://localhost:5000/health');
-        if (response.ok) {
-          const data = await response.json();
-          setHealth(data);
-        }
+        const data = await api.getHealth();
+        setHealth(data);
       } catch (err) {
         console.warn('API Health check failed (server may be offline):', err);
       }
