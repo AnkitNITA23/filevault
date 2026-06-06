@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@rolldown/binding-win32-x64-msvc": "^1.1.0",
     "canvas-confetti": "^1.9.3",
     "filevault-root": "file:..",
     "lucide-react": "^0.395.0",
