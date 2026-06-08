@@ -68,7 +68,7 @@ router.post('/upload-request', authenticateToken, async (req, res) => {
     );
 
     // Generate Upload Presigned URL
-    const uploadUrl = await storage.getUploadUrl(fileKey, mimeType);
+    const uploadUrl = await storage.getUploadUrl(fileKey, mimeType || 'application/octet-stream');
 
     res.status(201).json({
       fileId,

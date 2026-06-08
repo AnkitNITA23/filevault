@@ -14,7 +14,10 @@ if (!isLocal) {
     credentials: {
       accessKeyId: config.storage.aws.accessKeyId,
       secretAccessKey: config.storage.aws.secretAccessKey
-    }
+    },
+    // Prevent the SDK from automatically adding S3 checksum parameters to pre-signed URLs
+    // which causes signature mismatch 403 errors in standard browser XHR/fetch uploads
+    requestChecksumCalculation: 'WHEN_REQUIRED'
   });
 } else {
   console.log(`Storage Client: Using Local Folder fallback at ${config.storage.localUploadDir} (Local Mode)`);
@@ -35,7 +38,7 @@ async function getUploadUrl(fileKey, mimeType) {
     const command = new PutObjectCommand({
       Bucket: config.storage.aws.bucketName,
       Key: fileKey,
-      ContentType: mimeType
+      ContentType: mimeType || 'application/octet-stream'
     });
     // Link expires in 15 minutes for uploading
     return getSignedUrl(s3Client, command, { expiresIn: 900 });
